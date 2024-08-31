@@ -165,5 +165,8 @@ cython_debug/
 #yolov8 model
 yolov8x.pt
 
-#training folder
+#folders
 training/
+runs/
+model_weights/
+#

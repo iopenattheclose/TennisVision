@@ -17,3 +17,6 @@ using a dataset having annotated tennis ball images from roboflow, we are going 
 
 this annotated file from roboflow will have the train,test and val images along with the text file in format:
 classobj_id,xmin,ymin,xmax,ymax
+
+yolov5 is used to train the weights (v8/v9 can also be used)
+try both the weights and check best performance
