@@ -4,6 +4,10 @@ FILE FLOW
 1.yolo_inference.py
 2.training/tennis_ball_detector.ipynb
 3.training/tennis_court_keypoint_detector.ipynb
+4.main.py
+5.utils.py->reading the video frame by frame and save the frames
+6.player_tracker.py
+
 
 
 
