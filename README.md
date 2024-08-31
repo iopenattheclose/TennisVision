@@ -3,6 +3,7 @@
 FILE FLOW
 1.yolo_inference.py
 2.training/tennis_ball_detector.ipynb
+3.training/tennis_court_keypoint_detector.ipynb
 
 
 
@@ -20,3 +21,15 @@ classobj_id,xmin,ymin,xmax,ymax
 
 yolov5 is used to train the weights (v8/v9 can also be used)
 try both the weights and check best performance
+
+this fine tuned model trained so far will detect only the ball in the trained video, the model shall be fine tuned to detect other objects too
+
+yolov8->detects all objects in the image(player(1-n),racquet,ball(low confidence),clock)
+yolov5(fine tuned)->detects only ball(better confidence) as the annotated image has only ball labels and bboxes corresponding to ball objects
+therfore we will have two passes yolov8 to detect players and yolov5 to detect tennis ball
+
+object tracking->bboxes of same objects need to be identified between two frames
+using ultralytics we can track the bboxes of same objects between multiple frames
+
+keypoint detector is used to detect the points of the court whoch is used to calculate player speed etc
+after extracting the court detector images, the json file will have ground truth of the keypoints (14 points in one kps value-14(x,y) coordinates)

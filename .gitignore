@@ -166,7 +166,7 @@ cython_debug/
 yolov8x.pt
 
 #folders
-training/
+training/tennis-ball-detection-6
 runs/
 model_weights/
 #
