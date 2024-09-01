@@ -1,2 +1,3 @@
 from .video_utils import read_video,save_video
 from .bbox_utils import measure_distance, get_bbox_center
+from .conversions import convert_meters_covered_to_pixels_covered,convert_pixels_covered_to_meters_covered
