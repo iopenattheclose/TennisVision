@@ -7,7 +7,7 @@ FILE FLOW
 4.main.py
 5.utils.py->reading the video frame by frame and save the frames
 6.player_tracker.py
-
+7.tracker_stubs to save output of detected frames in pickle format
 
 
 
@@ -37,3 +37,7 @@ using ultralytics we can track the bboxes of same objects between multiple frame
 
 keypoint detector is used to detect the points of the court whoch is used to calculate player speed etc
 after extracting the court detector images, the json file will have ground truth of the keypoints (14 points in one kps value-14(x,y) coordinates)
+
+player_tracker class to track the player,draw bb 
+
+create a stub to save output of tracker to a file instead of predicting it again and again
