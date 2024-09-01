@@ -8,6 +8,7 @@ FILE FLOW
 5.utils.py->reading the video frame by frame and save the frames
 6.player_tracker.py
 7.tracker_stubs to save output of detected frames in pickle format
+8.court_keypoint_detector
 
 
 
@@ -41,3 +42,7 @@ after extracting the court detector images, the json file will have ground truth
 player_tracker class to track the player,draw bb 
 
 create a stub to save output of tracker to a file instead of predicting it again and again
+
+court_keypoint_detector to detect all the keypoints and draw them
+
+using interpolate function to track the ball in frames that are missing the ball tracking functionality

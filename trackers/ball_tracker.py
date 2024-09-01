@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import cv2
 import pickle
+import pandas as pd
 
 class BallTracker():
     def __init__(self,model_path):
@@ -51,3 +52,17 @@ class BallTracker():
             output_video_frames.append(frame)
 
         return output_video_frames
+
+    def interpolate_ball_positions(self, ball_positions):
+        ball_positions = [x.get(1,[]) for x in ball_positions]#list of bboxes, empty when no detections
+        df_ball_positions = pd.DataFrame(ball_positions,columns = ['x1','y1','x2','y2'])
+        #interpolate missing values
+        df_ball_positions.interpolate(inplace=True)
+        #interpolates missing frames in between, how to deal with missing ball detection frames at start?
+        #duplicate earliest ball detection as start if missing
+        df_ball_positions.bfill(inplace=True)
+
+        #returns list of dicts where 1 is trackid and value is bbox
+        ball_positions = [{1:x} for x in df_ball_positions.to_numpy().tolist()]
+
+        return ball_positions
