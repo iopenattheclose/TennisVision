@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import cv2
 import pickle
+from utils import measure_distance,get_bbox_center
 
 class PlayerTracker():
     def __init__(self,model_path):
@@ -57,3 +58,36 @@ class PlayerTracker():
             output_video_frames.append(frame)
 
         return output_video_frames
+
+    #this method helps to choose and filter only the players 
+    def choose_closest_persons_to_court(self, court_keypoints, player_detections):
+        player_detections_first_frame = player_detections[0]
+        chosen_player = self.choose_players(court_keypoints, player_detections_first_frame)
+        #filter out chosen players by looping over frames
+        filtered_player_detections =[]
+        for player_dict in player_detections:
+            filtered_player_dict = {track_id : bbox for track_id,bbox in player_dict.items() if track_id in chosen_player}
+            filtered_player_detections.append(filtered_player_dict)
+
+        return filtered_player_detections
+
+
+    def choose_players(self, court_keypoints,player_dict):
+        distances = [] #distance bw each person and court (each keypoint in court & player center)
+        for track_id, bbox in player_dict.items():
+            player_center = get_bbox_center(bbox)
+            
+            min_distance = float('inf')
+            for i in range(len(court_keypoints), 2):
+                court_keypoint = (court_keypoints[i], court_keypoints[i+1])
+                distance = measure_distance(player_center, court_keypoint)
+                if distance < min_distance:
+                    min_distance = distance
+            distances.append((track_id, min_distance))
+
+        #sort disances in ascending order
+        distances.sort(key= lambda x : x[1])
+        #choose first two track ids
+        chosen_players = [distances[0][0], distances[1][0]]
+
+        return chosen_players

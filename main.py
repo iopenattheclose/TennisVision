@@ -16,12 +16,15 @@ def main():
     #detecting players and ball
     player_tracker = PlayerTracker(model_path='yolov8x')
     ball_tracker = BallTracker(model_path='model_weights/yolov5_last.pt')
-    player_detections = player_tracker.detect_frames(video_frames,read_from_stub = True, 
+    person_detections = player_tracker.detect_frames(video_frames,read_from_stub = True, 
                                                      stub_path="tracker_stubs/player_detections.pkl")
     ball_detections = ball_tracker.detect_frames(video_frames,read_from_stub = True, 
                                                      stub_path="tracker_stubs/ball_detections.pkl")
 
     ball_detections = ball_tracker.interpolate_ball_positions(ball_detections)
+
+    #choosing players only
+    player_detections = player_tracker.choose_closest_persons_to_court(court_keypoints, person_detections)
 
     #drawing bboxes
     output_video_frames = player_tracker.draw_bboxes(video_frames, player_detections)
@@ -32,7 +35,7 @@ def main():
 
     #assigning frame number on top left corner
     for i,frame in enumerate(output_video_frames):
-        cv2.putText(frame, f"Frame #: {i}",(10,70),cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
+        cv2.putText(frame, f"Frame #: {i}",(50,70),cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
 
     save_video(output_video_frames,"output_videos/output_video.avi")
 

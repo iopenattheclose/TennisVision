@@ -46,3 +46,4 @@ create a stub to save output of tracker to a file instead of predicting it again
 court_keypoint_detector to detect all the keypoints and draw them
 
 using interpolate function to track the ball in frames that are missing the ball tracking functionality
+to detect only players, select the players closest to court by using the keypoints
