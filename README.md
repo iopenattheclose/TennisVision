@@ -9,6 +9,7 @@ FILE FLOW
 6.player_tracker.py
 7.tracker_stubs to save output of detected frames in pickle format
 8.court_keypoint_detector
+9.mini_court.py->to draw the court canvas
 
 
 
@@ -47,3 +48,4 @@ court_keypoint_detector to detect all the keypoints and draw them
 
 using interpolate function to track the ball in frames that are missing the ball tracking functionality
 to detect only players, select the players closest to court by using the keypoints
+

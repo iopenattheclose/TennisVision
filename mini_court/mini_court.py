@@ -11,6 +11,7 @@ class MiniCourt():
 
         self.set_canvas_background_position(frame)
         self.set_mini_court_position()
+        self.set_court_keypoints()
 
     #this sets the translucent background
     def set_canvas_background_position(self, frame):
@@ -76,4 +77,18 @@ class MiniCourt():
         drawing_keypoints[26] = int((drawing_keypoints[20] + drawing_keypoints[22])/2)
         drawing_keypoints[27] = drawing_keypoints[21]
 
+        self.drawing_keypoints = drawing_keypoints
 
+    def set_court_lines(self):
+        self.lines = [
+            (0, 2),
+            (4, 5),
+            (6,7),
+            (1,3),
+            
+            (0,1),
+            (8,9),
+            (10,11),
+            (10,11),
+            (2,3)
+        ]
