@@ -10,7 +10,7 @@ FILE FLOW
 7.tracker_stubs to save output of detected frames in pickle format
 8.court_keypoint_detector
 9.mini_court.py->to draw the court canvas
-
+10.ball_analysis.ipynb -> to detect the player and frame in which ball is hit
 
 
 This model uses a library called ultralytics

@@ -6,13 +6,14 @@ import numpy as np
 class MiniCourt():
     def __init__(self, frame):
         self.drawing_rectangle_width = 250 #in pixels
-        self.drawing_rectangle_height = 450
+        self.drawing_rectangle_height = 500
         self.edge_buffer = 50
         self.court_padding = 20
 
         self.set_canvas_background_position(frame)
         self.set_mini_court_position()
         self.set_court_keypoints()
+        self.set_court_lines()
 
     #this sets the translucent background
     def set_canvas_background_position(self, frame):
@@ -35,6 +36,7 @@ class MiniCourt():
         return convert_meters_covered_to_pixels_covered(meters,DOUBLE_LINE_WIDTH,self.court_drawing_width)
 
 
+    #manual effort
     def set_court_keypoints(self):
         drawing_keypoints = [0]*28
         # point0
@@ -42,7 +44,7 @@ class MiniCourt():
         # point1
         drawing_keypoints[2],drawing_keypoints[3] = int(self.court_end_x), int(self.court_start_y)
         #p2
-        drawing_keypoints[4] = int(self.court_end_x)
+        drawing_keypoints[4] = int(self.court_start_x)
         drawing_keypoints[5] = self.court_start_y + self.convert_meters_to_pixels(HALF_COURT_LINE_HEIGHT*2)
         #p3
         drawing_keypoints[6] = drawing_keypoints[0] + self.court_drawing_width
@@ -109,14 +111,36 @@ class MiniCourt():
         output_frames = []
         for frame in frames:
             frame = self.draw_background_rectangle(frame)
-            frame = self.draw_court_boundaries(frame)
+            frame = self.draw_mini_court(frame)
             output_frames.append(frame)
 
         return output_frames
 
-    def draw_court_boundaries(self, frame):
+    def draw_mini_court(self, frame):
         for i in range(0 , len(self.drawing_keypoints), 2):
             x = int(self.drawing_keypoints[i])
             y = int(self.drawing_keypoints[i+1])
             cv2.circle(frame, (x,y), 5,(255,0,0), -1)
+
+
+        #draw lines
+        for line in self.lines:
+            #multiple by 2 as
+            #0  0  1
+            #1  2  3
+            #2  4  5
+            start_point = (int(self.drawing_keypoints[line[0]*2]), int(self.drawing_keypoints[line[0]*2+1]))
+            end_point = (int(self.drawing_keypoints[line[1]*2]), int(self.drawing_keypoints[line[1]*2+1]))
+            cv2.line(frame, start_point, end_point, (0, 0, 0), 2)
+
+        # Draw net
+        net_start_point = (self.drawing_keypoints[0], int((self.drawing_keypoints[1] + self.drawing_keypoints[5])/2))
+        net_end_point = (self.drawing_keypoints[2], int((self.drawing_keypoints[1] + self.drawing_keypoints[5])/2))
+        cv2.line(frame, net_start_point, net_end_point, (255, 255, 0), 2)
+
         return frame
+    
+    def get_start_point_of_mini_court(self):
+        return (self.court_start_x,self.court_start_y)
+    def get_width_of_mini_court(self):
+        return self.court_drawing_width
