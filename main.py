@@ -27,6 +27,10 @@ def main():
     #choosing players only
     player_detections = player_tracker.choose_closest_persons_to_court(court_keypoints, person_detections)
 
+    #detect ball shots
+    ball_hit_frames = ball_tracker.get_frames_when_ball_is_hit(ball_detections)
+    print(ball_hit_frames)
+
     #initialize mini court
     mini_court = MiniCourt(video_frames[0])
 
