@@ -49,3 +49,6 @@ court_keypoint_detector to detect all the keypoints and draw them
 using interpolate function to track the ball in frames that are missing the ball tracking functionality
 to detect only players, select the players closest to court by using the keypoints
 
+add all mini-court details
+
+player and ball speed analytics in main.py using ball_hit_frames
