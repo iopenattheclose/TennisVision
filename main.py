@@ -1,4 +1,4 @@
-from utils import  read_video,save_video,measure_distance,convert_meters_covered_to_pixels_covered,convert_pixels_covered_to_meters_covered
+from utils import  read_video,save_video,measure_distance,convert_meters_covered_to_pixels_covered,convert_pixels_covered_to_meters_covered, draw_player_stats
 from trackers import PlayerTracker,BallTracker
 from courtline_detector import CourtlineDetector
 import cv2
@@ -35,7 +35,7 @@ def main():
 
     #detect ball shots
     ball_hit_frames = ball_tracker.get_frames_when_ball_is_hit(ball_detections)
-    print(f"Balls are approximately hit in these frames {0}" ,ball_hit_frames)
+    print(f"Balls are approximately hit in these frames" ,ball_hit_frames)
 
         #convert positions to mini-court positions
 
@@ -122,6 +122,9 @@ def main():
     output_video_frames = mini_court.draw_mini_court_on_all_frames(output_video_frames)
     output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames, player_mini_court_detections)
     output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames, ball_mini_court_detections, color= (0,255,255))
+
+    # Draw Player Stats
+    output_video_frames = draw_player_stats(output_video_frames,player_stats_data_df)
 
 
     #assigning frame number on top left corner
