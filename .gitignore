@@ -171,3 +171,5 @@ runs/
 model_weights/
 output_videos/
 
+analysis/
+training/
